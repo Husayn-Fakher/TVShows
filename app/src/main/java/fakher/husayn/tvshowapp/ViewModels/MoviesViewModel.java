@@ -1,31 +1,47 @@
 package fakher.husayn.tvshowapp.ViewModels;
 
+import android.app.Application;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-import fakher.husayn.tvshowapp.Model.MovieList;
-import fakher.husayn.tvshowapp.Networking.MoviesRepository;
-
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
+import fakher.husayn.tvshowapp.Model.Movie;
+import fakher.husayn.tvshowapp.Model.MovieDataSource;
+import fakher.husayn.tvshowapp.Model.MovieDataSourceFactory;
 /**
  * Created By Fakher_Husayn on 06-Nov-19
  **/
-public class MoviesViewModel extends ViewModel {
+public class MoviesViewModel extends AndroidViewModel {
 
-    private MutableLiveData<MovieList> mutableLiveData;
-    private MoviesRepository moviesRepository;
-    public static String apiKey = "5d967c7c335764f39b1efbe9c5de9760";
+    MovieDataSourceFactory movieDataSourceFactory;
+    MutableLiveData<MovieDataSource> dataSourceMutableLiveData;
+    Executor executor;
+    LiveData<PagedList<Movie>> pagedListLiveData;
 
-    public void init(){
-        if (mutableLiveData != null){
-            return;
-        }
-        moviesRepository = MoviesRepository.getInstance();
-        mutableLiveData = moviesRepository.getMovies(apiKey, "en",1);
+    public MoviesViewModel(@NonNull Application application) {
+        super(application);
 
+        movieDataSourceFactory = new MovieDataSourceFactory();
+        dataSourceMutableLiveData = movieDataSourceFactory.getMutableLiveData();
+
+        PagedList.Config config = (new PagedList.Config.Builder())
+                .setEnablePlaceholders(true)
+                .setInitialLoadSizeHint(10)
+                .setPageSize(20)
+                .setPrefetchDistance(4)
+                .build();
+        executor = Executors.newFixedThreadPool(5);
+        pagedListLiveData = (new LivePagedListBuilder<Integer,Movie>(movieDataSourceFactory,config))
+                .setFetchExecutor(executor)
+                .build();
     }
 
-    public LiveData<MovieList> getMoviesRepository() {
-        return mutableLiveData;
+    public LiveData<PagedList<Movie>> getPagedListLiveData() {
+        return pagedListLiveData;
     }
 
 }

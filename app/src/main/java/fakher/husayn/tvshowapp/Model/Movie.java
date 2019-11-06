@@ -2,8 +2,9 @@ package fakher.husayn.tvshowapp.Model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 
 /**
  * Created By Fakher_Husayn on 05-Nov-19
@@ -49,4 +50,16 @@ public class Movie {
     @SerializedName("poster_path")
     @Expose
     public String posterPath;
+
+
+    public static final DiffUtil.ItemCallback<Movie> CALLBACK = new DiffUtil.ItemCallback<Movie>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Movie movie, @NonNull Movie movie2) {
+            return movie.id == movie2.id;
+        }
+        @Override
+        public boolean areContentsTheSame(@NonNull Movie movie, @NonNull Movie movie2) {
+            return true;
+        }
+    };
 }
