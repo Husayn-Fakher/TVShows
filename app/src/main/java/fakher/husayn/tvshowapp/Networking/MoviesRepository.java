@@ -3,7 +3,6 @@ package fakher.husayn.tvshowapp.Networking;
 import android.util.Log;
 import java.util.List;
 import androidx.lifecycle.MutableLiveData;
-import fakher.husayn.tvshowapp.Model.Movie;
 import fakher.husayn.tvshowapp.Model.MovieList;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,17 +38,14 @@ public class MoviesRepository {
             public void onResponse(Call<MovieList> call,
                                    Response<MovieList> response) {
                 if (response.isSuccessful()){
-
-                    MovieList resource = response.body();
-                    List<Movie> movies = resource.results;
-                    // Making sure we are getting the data
-                    Log.d(TAG,movies.get(0).name);
+                    movies.setValue(response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<MovieList> call, Throwable t) {
                 Log.d(TAG,t.getMessage());
+                movies.setValue(null);
                 call.cancel();
             }
         });
