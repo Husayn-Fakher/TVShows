@@ -40,7 +40,7 @@ public class Movie {
     public String originalLanguage;
     @SerializedName("id")
     @Expose
-    public Integer id;
+    private Integer id;
     @SerializedName("vote_average")
     @Expose
     public Double voteAverage;
@@ -55,7 +55,7 @@ public class Movie {
     public static final DiffUtil.ItemCallback<Movie> CALLBACK = new DiffUtil.ItemCallback<Movie>() {
         @Override
         public boolean areItemsTheSame(@NonNull Movie movie, @NonNull Movie movie2) {
-            return movie.id == movie2.id;
+            return movie.id.equals(movie2.id);
         }
         @Override
         public boolean areContentsTheSame(@NonNull Movie movie, @NonNull Movie movie2) {

@@ -12,15 +12,16 @@ import androidx.paging.PagedList;
 import fakher.husayn.tvshowapp.Model.Movie;
 import fakher.husayn.tvshowapp.Model.MovieDataSource;
 import fakher.husayn.tvshowapp.Model.MovieDataSourceFactory;
+
 /**
  * Created By Fakher_Husayn on 06-Nov-19
  **/
 public class MoviesViewModel extends AndroidViewModel {
 
-    MovieDataSourceFactory movieDataSourceFactory;
-    MutableLiveData<MovieDataSource> dataSourceMutableLiveData;
-    Executor executor;
-    LiveData<PagedList<Movie>> pagedListLiveData;
+    private final MovieDataSourceFactory movieDataSourceFactory;
+    private final MutableLiveData<MovieDataSource> dataSourceMutableLiveData;
+    private final Executor executor;
+    private final LiveData<PagedList<Movie>> pagedListLiveData;
 
     public MoviesViewModel(@NonNull Application application) {
         super(application);

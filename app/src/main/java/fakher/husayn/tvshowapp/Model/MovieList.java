@@ -20,7 +20,7 @@ public class MovieList {
     public Integer totalPages;
     @SerializedName("results")
     @Expose
-    public List<Movie> results = null;
+    private final List<Movie> results = null;
 
     public List<Movie> getMovies() {
         return results;

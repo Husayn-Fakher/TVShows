@@ -1,6 +1,9 @@
 package fakher.husayn.tvshowapp.Model;
 
 import android.util.Log;
+
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
 import fakher.husayn.tvshowapp.Networking.APIClient;
@@ -14,9 +17,9 @@ import retrofit2.Response;
  **/
 public class MovieDataSource extends PageKeyedDataSource<Integer,Movie> {
 
-    APIInterface apiInterface;
-    public static String TAG = "MyTVAppDebug";
-    public static String apiKey = "5d967c7c335764f39b1efbe9c5de9760";
+    private  APIInterface apiInterface;
+    private static final String TAG = "MyTVAppDebug";
+    private static final String apiKey = "5d967c7c335764f39b1efbe9c5de9760";
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, Movie> callback) {
@@ -29,7 +32,7 @@ public class MovieDataSource extends PageKeyedDataSource<Integer,Movie> {
                 if (response.isSuccessful()){
 
                     MovieList movieList = response.body();
-                    callback.onResult(movieList.getMovies(),null,2);
+                    callback.onResult(Objects.requireNonNull(movieList).getMovies(),null,2);
                 }
             }
 
@@ -58,7 +61,7 @@ public class MovieDataSource extends PageKeyedDataSource<Integer,Movie> {
                 if (response.isSuccessful()){
 
                     MovieList movieList = response.body();
-                    callback.onResult(movieList.getMovies(),params.key+1);
+                    callback.onResult(Objects.requireNonNull(movieList).getMovies(),params.key+1);
                 }
             }
 

@@ -15,10 +15,10 @@
         <ImageView
             android:id="@+id/movie_image"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:scaleType="centerCrop"
-             />
+            android:scaleType="centerInside"
+            android:contentDescription="@string/contentDescription" />
 
         <TextView
             android:id="@+id/movie_title"

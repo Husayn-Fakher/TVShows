@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">TvShowApp</string>
-
+    <string name="contentDescription">Movie Poster</string>
 </resources>
